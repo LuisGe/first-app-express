@@ -5,23 +5,23 @@ const routerApi = require('./routes')
 const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler')
 
 const app = express()
-// app.use(cors()); //All cors alowed
-const whitelist = ['http://localhost:8080', 'https://myapp.co'];
-const options = {
-  origin: (origin, callback) => {
-    if (whitelist.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('no permitido'));
-    }
-  }
-}
-app.use(cors(options));
+app.use(cors()); //All cors alowed
+// const whitelist = ['http://localhost:8080', 'https://myapp.co'];
+// const options = {
+//   origin: (origin, callback) => {
+//     if (whitelist.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('no permitido'));
+//     }
+//   }
+// }
+// app.use(cors(options)); //CORS with a white list
 
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.use(express.json())
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send('Mi primer server en express')
 })
 routerApi(app);
